@@ -41,3 +41,7 @@ class Wishlist(Model):
     created_at = DateTimeField(auto_now=True)
 
 
+class Order(Model):
+    user = ForeignKey('auth.User', CASCADE)
+    product = ForeignKey(Product, CASCADE, 'order')
+    quantity = IntegerField(default=1)
