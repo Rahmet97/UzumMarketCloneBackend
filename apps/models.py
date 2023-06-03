@@ -33,3 +33,11 @@ class Product(Model):
 
     def __str__(self):
         return self.title
+
+
+class Wishlist(Model):
+    product = ForeignKey('Product', CASCADE)
+    user = ForeignKey('auth.User', CASCADE)
+    created_at = DateTimeField(auto_now=True)
+
+
