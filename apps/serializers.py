@@ -1,6 +1,6 @@
 from rest_framework.serializers import ModelSerializer
 
-from apps.models import Product, ProductImage, Category, Wishlist, Order
+from apps.models import Product, ProductImage, Category, Wishlist, Order, Basket
 
 
 class ProductImageModelSerializer(ModelSerializer):
@@ -33,3 +33,9 @@ class OrderModelSerializer(ModelSerializer):
     class Meta:
         model = Order
         exclude = ('id',)
+
+
+class BasketSerializer(ModelSerializer):
+    class Meta:
+        model = Basket
+        fields = '__all__'

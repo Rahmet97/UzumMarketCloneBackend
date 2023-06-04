@@ -2,9 +2,9 @@
 from rest_framework.generics import RetrieveAPIView, ListCreateAPIView, CreateAPIView
 from rest_framework.viewsets import ModelViewSet
 
-from apps.models import Product, Category, Wishlist, Order
+from apps.models import Product, Category, Wishlist, Order, Basket
 from apps.serializers import ProductModelSerializer, CategoryModelSerializer, WishListModelSerializer, \
-    OrderModelSerializer
+    OrderModelSerializer, BasketSerializer
 
 
 class ProductModelViewSet(ModelViewSet):
@@ -31,3 +31,8 @@ class WishListModelViewSet(ModelViewSet):
 class OrderCreateView(CreateAPIView):
     serializer_class = OrderModelSerializer
     queryset = Order.objects.all()
+
+
+class BasketViewSet(ModelViewSet):
+    queryset = Basket.objects.all()
+    serializer_class = BasketSerializer
