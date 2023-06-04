@@ -1,7 +1,7 @@
 from django.contrib import admin
 from modeltranslation.admin import TranslationAdmin
 
-from apps.models import Product, Category
+from products.models import Product, Category
 
 
 # class ProductAdmin(admin.ModelAdmin):
@@ -26,3 +26,5 @@ class NewAdmin(TranslationAdmin):
 @admin.register(Product)
 class NewAdmin(TranslationAdmin):
     pass
+
+

@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
-from django.db.models import Model, CharField, IntegerField, TextField, ForeignKey, CASCADE, ImageField, DateTimeField
+from django.db.models import Model, CharField, IntegerField, TextField, ForeignKey, CASCADE, ImageField, DateTimeField, \
+    Index
 from mptt.fields import TreeForeignKey
 from mptt.models import MPTTModel
 
@@ -7,6 +8,11 @@ from mptt.models import MPTTModel
 class Category(MPTTModel):
     name = CharField(max_length=150)
     parent = TreeForeignKey('self', CASCADE, 'children', null=True, blank=True)
+
+    class Meta:
+        indexes = [
+            Index(fields=['name'])
+        ]
 
     def __str__(self):
         return self.name
@@ -30,6 +36,11 @@ class Product(Model):
     views = IntegerField(default=0)
     category = ForeignKey('Category', CASCADE)
     owner = ForeignKey('auth.User', CASCADE)
+
+    class Meta:
+        indexes = [
+            Index(fields=['title', 'description'])
+        ]
 
     def __str__(self):
         return self.title
