@@ -45,3 +45,9 @@ class Order(Model):
     user = ForeignKey('auth.User', CASCADE)
     product = ForeignKey(Product, CASCADE, 'order')
     quantity = IntegerField(default=1)
+
+
+class Basket(Model):
+    product = ForeignKey('Product', CASCADE, 'baskets')
+    quantity = IntegerField(default=1)
+    user = ForeignKey('auth.User', on_delete=CASCADE)
