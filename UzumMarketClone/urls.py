@@ -23,5 +23,7 @@ from UzumMarketClone.swagger import swagger_urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('products.urls')),
+    path('product/', include('products.urls')),
+    path('auth/', include('auth.urls')),
+
 ] + swagger_urls + static(MEDIA_URL, document_root=MEDIA_ROOT)
