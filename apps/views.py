@@ -1,6 +1,6 @@
 # Product
 from django.core.cache import cache
-from rest_framework.generics import RetrieveAPIView, ListCreateAPIView, CreateAPIView
+from rest_framework.generics import RetrieveAPIView, ListCreateAPIView, CreateAPIView, ListAPIView
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
@@ -45,3 +45,11 @@ class OrderCreateView(CreateAPIView):
 class BasketViewSet(ModelViewSet):
     queryset = Basket.objects.all()
     serializer_class = BasketSerializer
+
+
+class ProductSearchAPIView(ListAPIView):
+    serializer_class = ProductModelSerializer
+
+    def get_queryset(self):
+        query = self.request.query_params.get('query', '')
+        return Product.objects.filter(title__icontains=query) | Product.objects.filter(category__name__icontains=query)
