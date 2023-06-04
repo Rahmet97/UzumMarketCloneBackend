@@ -1,12 +1,13 @@
 # Product
 from django.core.cache import cache
+from rest_framework.filters import SearchFilter
 from rest_framework.generics import RetrieveAPIView, ListCreateAPIView, CreateAPIView, ListAPIView
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
-from apps.models import Product, Category, Wishlist, Order, Basket
-from apps.serializers import ProductModelSerializer, CategoryModelSerializer, WishListModelSerializer, \
-    OrderModelSerializer, BasketSerializer
+from products.models import Product, Category, Wishlist, Order, Basket
+from products.serializers import ProductModelSerializer, CategoryModelSerializer, WishListModelSerializer, \
+    OrderModelSerializer, BasketSerializer, SearchModelSerializer
 
 
 class ProductModelViewSet(ModelViewSet):
@@ -48,8 +49,8 @@ class BasketViewSet(ModelViewSet):
 
 
 class ProductSearchAPIView(ListAPIView):
-    serializer_class = ProductModelSerializer
+    queryset = Product.objects.all()
+    serializer_class = SearchModelSerializer
+    filter_backends = [SearchFilter]
+    search_fields = ['title', 'description']
 
-    def get_queryset(self):
-        query = self.request.query_params.get('query', '')
-        return Product.objects.filter(title__icontains=query) | Product.objects.filter(category__name__icontains=query)

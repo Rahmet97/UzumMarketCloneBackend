@@ -24,7 +24,7 @@ class Migration(migrations.Migration):
                 ('rght', models.PositiveIntegerField(editable=False)),
                 ('tree_id', models.PositiveIntegerField(db_index=True, editable=False)),
                 ('level', models.PositiveIntegerField(editable=False)),
-                ('parent', mptt.fields.TreeForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='children', to='apps.category')),
+                ('parent', mptt.fields.TreeForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='children', to='products.category')),
             ],
             options={
                 'abstract': False,
@@ -41,7 +41,7 @@ class Migration(migrations.Migration):
                 ('quantity', models.IntegerField()),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('views', models.IntegerField(default=0)),
-                ('category', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='apps.category')),
+                ('category', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='products.category')),
                 ('owner', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),
@@ -50,7 +50,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('image', models.ImageField(upload_to='products/images/')),
-                ('products', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='apps.product')),
+                ('products', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='products.product')),
             ],
         ),
     ]
