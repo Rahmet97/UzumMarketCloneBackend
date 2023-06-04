@@ -26,3 +26,5 @@ class NewAdmin(TranslationAdmin):
 @admin.register(Product)
 class NewAdmin(TranslationAdmin):
     pass
+
+
