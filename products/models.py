@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django.db.models import Model, CharField, IntegerField, TextField, ForeignKey, CASCADE, ImageField, DateTimeField, \
-    Index
+    Index, FloatField
 from mptt.fields import TreeForeignKey
 from mptt.models import MPTTModel
 
@@ -62,3 +62,15 @@ class Basket(Model):
     product = ForeignKey('Product', CASCADE, 'baskets')
     quantity = IntegerField(default=1)
     user = ForeignKey('auth.User', on_delete=CASCADE)
+
+
+class City(Model):
+    name = CharField(max_length=255)
+
+
+class Location(Model):
+    address = CharField(max_length=255)
+    option = CharField(max_length=255)
+    hour = DateTimeField(auto_now_add=True)
+    latitude = FloatField()
+    longitude = FloatField()

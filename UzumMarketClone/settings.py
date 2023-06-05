@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
     'products',
-    'accounts',
+    'users',
     'drf_yasg',
     'django_filters',
 
@@ -98,16 +98,16 @@ DATABASES = {
 
 # AUTH_PASSWORD_VALIDATORS = [
 #     {
-#         'NAME': 'django.contrib.accounts.password_validation.UserAttributeSimilarityValidator',
+#         'NAME': 'django.contrib.users.password_validation.UserAttributeSimilarityValidator',
 #     },
 #     {
-#         'NAME': 'django.contrib.accounts.password_validation.MinimumLengthValidator',
+#         'NAME': 'django.contrib.users.password_validation.MinimumLengthValidator',
 #     },
 #     {
-#         'NAME': 'django.contrib.accounts.password_validation.CommonPasswordValidator',
+#         'NAME': 'django.contrib.users.password_validation.CommonPasswordValidator',
 #     },
 #     {
-#         'NAME': 'django.contrib.accounts.password_validation.NumericPasswordValidator',
+#         'NAME': 'django.contrib.users.password_validation.NumericPasswordValidator',
 #     },
 # ]
 
