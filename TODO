@@ -6,13 +6,12 @@ View ✅
 Basket ✅
 Order ✅
 Search ✅
-Location - latitude and longitude FloatField
-shahar model - name
+Location - latitude and longitude FloatField 📍
+shahar model - name 📍
 rating
 
 
-Login
-User
+Login ✅
 
 
 Additional functions
