@@ -14,6 +14,7 @@ class ProductModelViewSet(ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductModelSerializer
 
+    # cache
     def list(self, request, *args, **kwargs):
         if cache.get('data') is None:
             cache.set('data', self.get_queryset(), timeout=60)
@@ -25,6 +26,15 @@ class ProductModelViewSet(ModelViewSet):
 class ProductDetailRetrieveAPIView(RetrieveAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductModelSerializer
+
+    # view
+    def retrieve(self, request, *args, **kwargs):
+        self.get_queryset()
+        instance = self.get_object()
+        instance.view_count += 1
+        instance.save()
+        serializer = ProductModelSerializer(instance)
+        return Response(serializer.data)
 
 
 # Category
@@ -53,4 +63,3 @@ class ProductSearchAPIView(ListAPIView):
     serializer_class = SearchModelSerializer
     filter_backends = [SearchFilter]
     search_fields = ['title', 'description']
-
