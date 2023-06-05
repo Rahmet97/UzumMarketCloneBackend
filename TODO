@@ -6,7 +6,11 @@ View ✅
 Basket ✅
 Order ✅
 Search ✅
-Location
+Location - latitude and longitude FloatField
+shahar model - name
+rating
+
+
 Login
 User
 
