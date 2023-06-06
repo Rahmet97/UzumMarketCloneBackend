@@ -67,6 +67,9 @@ class Basket(Model):
 class City(Model):
     name = CharField(max_length=255)
 
+    def __str__(self):
+        return self.name
+
 
 class Location(Model):
     address = CharField(max_length=255)
@@ -74,3 +77,16 @@ class Location(Model):
     hour = DateTimeField(auto_now_add=True)
     latitude = FloatField()
     longitude = FloatField()
+
+    def __str__(self):
+        return self.address
+
+
+class Comment(Model):
+    name = CharField(max_length=100)
+    # rate = ForeignKey
+    description = TextField()
+    image = ImageField(upload_to='comments/images/')
+
+    def __str__(self):
+        return self.name
