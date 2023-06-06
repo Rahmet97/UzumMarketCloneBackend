@@ -5,11 +5,12 @@ from rest_framework.generics import RetrieveAPIView, ListCreateAPIView, CreateAP
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
-from products.models import Product, Category, Wishlist, Order, Basket
+from products.models import Product, Category, Wishlist, Order, Basket, Comment
 from products.serializers import ProductModelSerializer, CategoryModelSerializer, WishListModelSerializer, \
-    OrderModelSerializer, BasketSerializer, SearchModelSerializer
+    OrderModelSerializer, BasketSerializer, SearchModelSerializer, CommentModelSerializer
 
 
+#  Product
 class ProductModelViewSet(ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductModelSerializer
@@ -23,6 +24,7 @@ class ProductModelViewSet(ModelViewSet):
             return Response(self.get_serializer(cache.get('data'), many=True).data)
 
 
+#  ProductDetail
 class ProductDetailRetrieveAPIView(RetrieveAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductModelSerializer
@@ -43,23 +45,32 @@ class CategoryCreateAPIView(ListCreateAPIView):
     serializer_class = CategoryModelSerializer
 
 
+# WishList
 class WishListModelViewSet(ModelViewSet):
     queryset = Wishlist.objects.all()
     serializer_class = WishListModelSerializer
 
 
+# Order
 class OrderCreateView(CreateAPIView):
     serializer_class = OrderModelSerializer
     queryset = Order.objects.all()
 
 
+#  Basket
 class BasketViewSet(ModelViewSet):
     queryset = Basket.objects.all()
     serializer_class = BasketSerializer
 
 
+#  Search
 class ProductSearchAPIView(ListAPIView):
     queryset = Product.objects.all()
     serializer_class = SearchModelSerializer
     filter_backends = [SearchFilter]
     search_fields = ['title', 'description']
+
+
+class CommentViewSet(ModelViewSet):
+    queryset = Comment.objects.all()
+    serializer_class = CommentModelSerializer

@@ -1,7 +1,7 @@
 from django.contrib import admin
 from modeltranslation.admin import TranslationAdmin
 
-from products.models import Product, Category
+from products.models import Product, Category, Comment
 
 
 # class ProductAdmin(admin.ModelAdmin):
@@ -11,11 +11,11 @@ from products.models import Product, Category
 # admin.site.register(Product, ProductAdmin)
 #
 #
-# class CategoryAdmin(admin.ModelAdmin):
-#     list_display = ('name', 'parent')
-#
-#
-# admin.site.register(Category, CategoryAdmin)
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+
+
+admin.site.register(Comment, CommentAdmin)
 
 
 @admin.register(Category)
