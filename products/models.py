@@ -31,7 +31,6 @@ class Product(Model):
     price = IntegerField()
     short_description = TextField(blank=True, null=True)
     long_description = TextField(blank=True, null=True)
-    description = TextField()
     discount = IntegerField(null=True, blank=True)
     quantity = IntegerField()
     created_at = DateTimeField(auto_now_add=True)
@@ -41,7 +40,7 @@ class Product(Model):
 
     class Meta:
         indexes = [
-            Index(fields=['title', 'description'])
+            Index(fields=['title', 'long_description','short_description'])
         ]
 
     def __str__(self):
