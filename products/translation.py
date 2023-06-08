@@ -10,4 +10,4 @@ class NewTranslationOption(TranslationOptions):
 
 @register(Product)
 class NewTranslationOption(TranslationOptions):
-    fields = ('title', 'long_description', 'short_description', 'description')
+    fields = ('title', 'long_description', 'short_description')
