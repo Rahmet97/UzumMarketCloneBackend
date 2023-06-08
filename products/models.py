@@ -95,7 +95,7 @@ class Comment(Model):
 
 
 class Rating(Model):
-    user = ForeignKey('User', CASCADE)
+    user = ForeignKey('auth.User', CASCADE)
     product = ForeignKey('Product', CASCADE)
     rating = PositiveIntegerField()
     created_at = DateTimeField(auto_now_add=True)
