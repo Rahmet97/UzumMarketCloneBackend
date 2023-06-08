@@ -2,7 +2,7 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 
 from .views import ProductModelViewSet, CategoryCreateAPIView, ProductDetailRetrieveAPIView, WishListModelViewSet, \
-    BasketViewSet, ProductSearchAPIView, CommentViewSet
+    BasketViewSet, ProductSearchAPIView, CommentViewSet, RatingCreateView
 
 routers = DefaultRouter()
 
@@ -16,5 +16,6 @@ urlpatterns = [
     path('category/<int:pk>', CategoryCreateAPIView.as_view()),
     path('product_detail/<int:pk>', ProductDetailRetrieveAPIView.as_view()),
     path('search/', ProductSearchAPIView.as_view()),
+    path('ratings/', RatingCreateView.as_view()),
     path('', include(routers.urls)),
 ]

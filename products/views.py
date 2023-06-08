@@ -2,18 +2,20 @@
 from django.core.cache import cache
 from rest_framework.filters import SearchFilter
 from rest_framework.generics import RetrieveAPIView, ListCreateAPIView, CreateAPIView, ListAPIView
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
-from products.models import Product, Category, Wishlist, Order, Basket, Comment
+from products.models import Product, Category, Wishlist, Order, Basket, Comment, Rating
 from products.serializers import ProductModelSerializer, CategoryModelSerializer, WishListModelSerializer, \
-    OrderModelSerializer, BasketSerializer, SearchModelSerializer, CommentModelSerializer
+    OrderModelSerializer, BasketSerializer, SearchModelSerializer, CommentModelSerializer, RatingModelSerializer
 
 
 #  Product
 class ProductModelViewSet(ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductModelSerializer
+    pagination_class = PageNumberPagination
 
     # cache
     def list(self, request, *args, **kwargs):
@@ -74,3 +76,8 @@ class ProductSearchAPIView(ListAPIView):
 class CommentViewSet(ModelViewSet):
     queryset = Comment.objects.all()
     serializer_class = CommentModelSerializer
+
+
+class RatingCreateView(ListCreateAPIView):
+    queryset = Rating.objects.all()
+    serializer_class = RatingModelSerializer
