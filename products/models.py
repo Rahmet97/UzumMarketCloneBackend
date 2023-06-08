@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django.db.models import Model, CharField, IntegerField, TextField, ForeignKey, CASCADE, ImageField, DateTimeField, \
-    Index, FloatField
+    Index, FloatField, PositiveIntegerField
 from mptt.fields import TreeForeignKey
 from mptt.models import MPTTModel
 
@@ -29,6 +29,8 @@ class ProductImage(Model):
 class Product(Model):
     title = CharField(max_length=150)
     price = IntegerField()
+    short_description = TextField(blank=True, null=True)
+    long_description = TextField(blank=True, null=True)
     description = TextField(blank=True, null=True)
     discount = IntegerField(null=True, blank=True)
     quantity = IntegerField()
@@ -90,3 +92,10 @@ class Comment(Model):
 
     def __str__(self):
         return self.name
+
+
+class Rating(Model):
+    user = ForeignKey('User', CASCADE)
+    product = ForeignKey('Product', CASCADE)
+    rating = PositiveIntegerField()
+    created_at = DateTimeField(auto_now_add=True)
