@@ -31,7 +31,7 @@ class Product(Model):
     price = IntegerField()
     short_description = TextField(blank=True, null=True)
     long_description = TextField(blank=True, null=True)
-    description = TextField(blank=True, null=True)
+    description = TextField()
     discount = IntegerField(null=True, blank=True)
     quantity = IntegerField()
     created_at = DateTimeField(auto_now_add=True)
@@ -65,6 +65,9 @@ class Basket(Model):
     quantity = IntegerField(default=1)
     user = ForeignKey('auth.User', on_delete=CASCADE)
 
+    def __str__(self):
+        return self.product
+
 
 class City(Model):
     name = CharField(max_length=255)
@@ -86,7 +89,7 @@ class Location(Model):
 
 class Comment(Model):
     name = CharField(max_length=100)
-    # rate = ForeignKey
+    rate = ForeignKey('Rating', CASCADE)
     description = TextField()
     image = ImageField(upload_to='comments/images/')
 
@@ -99,3 +102,6 @@ class Rating(Model):
     product = ForeignKey('Product', CASCADE)
     rating = PositiveIntegerField()
     created_at = DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.user
