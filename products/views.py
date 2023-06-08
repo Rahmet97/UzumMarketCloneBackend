@@ -2,6 +2,7 @@
 from django.core.cache import cache
 from rest_framework.filters import SearchFilter
 from rest_framework.generics import RetrieveAPIView, ListCreateAPIView, CreateAPIView, ListAPIView
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
@@ -14,6 +15,34 @@ from products.serializers import ProductModelSerializer, CategoryModelSerializer
 class ProductModelViewSet(ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductModelSerializer
+    pagination_class = PageNumberPagination
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     # cache
     def list(self, request, *args, **kwargs):
