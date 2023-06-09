@@ -40,7 +40,7 @@ class Product(Model):
 
     class Meta:
         indexes = [
-            Index(fields=['title', 'long_description','short_description'])
+            Index(fields=['title', 'long_description', 'short_description'])
         ]
 
     def __str__(self):
@@ -101,6 +101,15 @@ class Rating(Model):
     product = ForeignKey('Product', CASCADE)
     rating = PositiveIntegerField()
     created_at = DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.user
+
+
+class ViewedProduct(Model):
+    user = ForeignKey('auth.User', CASCADE)
+    product = ForeignKey('Product', CASCADE)
+    timestamp = DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.user
