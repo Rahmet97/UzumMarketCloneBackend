@@ -18,6 +18,14 @@ class ProductModelViewSet(ModelViewSet):
     serializer_class = ProductModelSerializer
     pagination_class = PageNumberPagination
 
+    # Similar products
+    @action(detail=True, methods=['GET'])
+    def similar_products(self, request, pk=None):
+        product = self.get_object()
+        similar_products = Product.objects.filter(category=product.category)[:5]
+        serializer = ProductModelSerializer(similar_products, many=True)
+        return Response(serializer.data)
+
     # discount
     @action(detail=True, methods=['POST'])
     def add_discount(self, request, pk=None):
