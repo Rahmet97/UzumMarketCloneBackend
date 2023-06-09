@@ -44,7 +44,7 @@ class BasketSerializer(ModelSerializer):
 class SearchModelSerializer(ModelSerializer):
     class Meta:
         model = Product
-        fields = ('title', 'description')
+        fields = ('title', 'short_description')
 
 
 class CommentModelSerializer(ModelSerializer):
