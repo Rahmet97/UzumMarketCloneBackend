@@ -7,9 +7,10 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
-from products.models import Product, Category, Wishlist, Order, Basket, Comment, Rating
+from products.models import Product, Category, Wishlist, Order, Basket, Comment, Rating, ViewedProduct
 from products.serializers import ProductModelSerializer, CategoryModelSerializer, WishListModelSerializer, \
-    OrderModelSerializer, BasketSerializer, SearchModelSerializer, CommentModelSerializer, RatingModelSerializer
+    OrderModelSerializer, BasketSerializer, SearchModelSerializer, CommentModelSerializer, RatingModelSerializer, \
+    ViewedProductSerializer
 
 
 #  Product
@@ -24,6 +25,19 @@ class ProductModelViewSet(ModelViewSet):
         product = self.get_object()
         similar_products = Product.objects.filter(category=product.category)[:5]
         serializer = ProductModelSerializer(similar_products, many=True)
+        return Response(serializer.data)
+
+    # Products viewed
+    @action(detail=True, methods=['POST'])
+    def mark_viewed(self, request, pk=None):
+        product = self.get_object()
+
+        user = request.user
+
+        viewed_product = ViewedProduct(user=user, product=product)
+        viewed_product.save()
+
+        serializer = ViewedProductSerializer(viewed_product)
         return Response(serializer.data)
 
     # discount
