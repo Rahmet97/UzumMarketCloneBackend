@@ -1,5 +1,6 @@
 # Product
 from django.core.cache import cache
+from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.filters import SearchFilter
 from rest_framework.generics import RetrieveAPIView, ListCreateAPIView, CreateAPIView, ListAPIView
@@ -51,6 +52,20 @@ class ProductModelViewSet(ModelViewSet):
 
         serializer = self.get_serializer(product)
         return Response(serializer.data)
+
+    # discount products
+
+    @action(detail=True, methods=['post'])
+    def discount(self, request, pk=None):
+        product = self.get_object()
+        discount_percentage = request.data.get('discount_percentage')
+        if discount_percentage is not None:
+            product.price -= (product.price * (discount_percentage / 100))
+            product.save()
+            return Response({'message': 'Discount applied successfully.'})
+        else:
+            return Response({'error': 'Please provide a valid discount percentage.'},
+                            status=status.HTTP_400_BAD_REQUEST)
 
     # cache
     def list(self, request, *args, **kwargs):
