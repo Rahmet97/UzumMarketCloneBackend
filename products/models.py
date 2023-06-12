@@ -114,3 +114,11 @@ class ViewedProduct(Model):
 
     def __str__(self):
         return self.user
+
+
+class Option(Model):
+    size = CharField(max_length=100)
+    color = CharField(max_length=100)
+
+    def __str__(self):
+        return self.size

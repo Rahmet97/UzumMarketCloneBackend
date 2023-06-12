@@ -1,8 +1,9 @@
 # Product
 from django.core.cache import cache
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status
 from rest_framework.decorators import action
-from rest_framework.filters import SearchFilter
+from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.generics import RetrieveAPIView, ListCreateAPIView, CreateAPIView, ListAPIView
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
@@ -87,6 +88,8 @@ class ProductModelViewSet(ModelViewSet):
 class ProductDetailRetrieveAPIView(RetrieveAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductModelSerializer
+    filter_backends = (DjangoFilterBackend, OrderingFilter)
+    filterset_fields = ['option__color', 'price']
 
     # view
     def retrieve(self, request, *args, **kwargs):
@@ -130,11 +133,13 @@ class ProductSearchAPIView(ListAPIView):
     search_fields = ['title', 'description']
 
 
+# Comment
 class CommentViewSet(ModelViewSet):
     queryset = Comment.objects.all()
     serializer_class = CommentModelSerializer
 
 
+# Rating
 class RatingCreateView(ListCreateAPIView):
     queryset = Rating.objects.all()
     serializer_class = RatingModelSerializer
