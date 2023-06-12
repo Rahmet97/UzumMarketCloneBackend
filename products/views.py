@@ -100,6 +100,13 @@ class ProductDetailRetrieveAPIView(RetrieveAPIView):
         serializer = ProductModelSerializer(instance)
         return Response(serializer.data)
 
+#  Search
+class ProductSearchAPIView(ListAPIView):
+    queryset = Product.objects.all()
+    serializer_class = SearchModelSerializer
+    filter_backends = [SearchFilter]
+    search_fields = ['title', 'description']
+
 
 # Category
 class CategoryCreateAPIView(ListCreateAPIView):
@@ -125,12 +132,7 @@ class BasketViewSet(ModelViewSet):
     serializer_class = BasketSerializer
 
 
-#  Search
-class ProductSearchAPIView(ListAPIView):
-    queryset = Product.objects.all()
-    serializer_class = SearchModelSerializer
-    filter_backends = [SearchFilter]
-    search_fields = ['title', 'description']
+
 
 
 # Comment
