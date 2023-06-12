@@ -133,11 +133,13 @@ class ProductSearchAPIView(ListAPIView):
     search_fields = ['title', 'description']
 
 
+# Comment
 class CommentViewSet(ModelViewSet):
     queryset = Comment.objects.all()
     serializer_class = CommentModelSerializer
 
 
+# Rating
 class RatingCreateView(ListCreateAPIView):
     queryset = Rating.objects.all()
     serializer_class = RatingModelSerializer
