@@ -160,3 +160,5 @@ class CommentViewSet(ModelViewSet):
 class RatingCreateView(ListCreateAPIView):
     queryset = Rating.objects.all()
     serializer_class = RatingModelSerializer
+    permission_classes = [AllowAny]
+
