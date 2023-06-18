@@ -4,13 +4,6 @@ from modeltranslation.admin import TranslationAdmin
 from products.models import Product, Category, Comment
 
 
-# class ProductAdmin(admin.ModelAdmin):
-#     list_display = ('title', 'price')
-#
-#
-# admin.site.register(Product, ProductAdmin)
-#
-#
 class CommentAdmin(admin.ModelAdmin):
     list_display = ('name',)
 
@@ -26,5 +19,3 @@ class NewAdmin(TranslationAdmin):
 @admin.register(Product)
 class NewAdmin(TranslationAdmin):
     pass
-
-
