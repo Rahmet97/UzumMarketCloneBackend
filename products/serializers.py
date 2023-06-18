@@ -29,22 +29,10 @@ class WishListModelSerializer(ModelSerializer):
         fields = '__all__'
 
 
-class OrderModelSerializer(ModelSerializer):
-    class Meta:
-        model = Order
-        exclude = ('id',)
-
-
 class BasketSerializer(ModelSerializer):
     class Meta:
         model = Basket
         fields = '__all__'
-
-
-class SearchModelSerializer(ModelSerializer):
-    class Meta:
-        model = Product
-        fields = ('title', 'short_description')
 
 
 class CommentModelSerializer(ModelSerializer):
@@ -63,3 +51,15 @@ class ViewedProductSerializer(ModelSerializer):
     class Meta:
         model = ViewedProduct
         exclude = ()
+
+
+class OrderModelSerializer(ModelSerializer):
+    class Meta:
+        model = Order
+        exclude = ('id',)
+
+
+class SearchModelSerializer(ModelSerializer):
+    class Meta:
+        model = Product
+        fields = ('title', 'short_description')

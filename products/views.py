@@ -1,18 +1,27 @@
-# Product
 from django.core.cache import cache
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status
 from rest_framework.decorators import action
-from rest_framework.filters import SearchFilter, OrderingFilter
-from rest_framework.generics import RetrieveAPIView, ListCreateAPIView, CreateAPIView, ListAPIView
+from rest_framework.filters import (SearchFilter, OrderingFilter)
+from rest_framework.generics import (RetrieveAPIView, ListCreateAPIView, CreateAPIView, ListAPIView)
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.permissions import BasePermission, AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
-from products.models import Product, Category, Wishlist, Order, Basket, Comment, Rating, ViewedProduct
-from products.serializers import ProductModelSerializer, CategoryModelSerializer, WishListModelSerializer, \
-    OrderModelSerializer, BasketSerializer, SearchModelSerializer, CommentModelSerializer, RatingModelSerializer, \
-    ViewedProductSerializer
+from products.models import (Product, Category, Wishlist, Order, Basket, Comment, Rating, ViewedProduct)
+from products.serializers import (ProductModelSerializer, CategoryModelSerializer, WishListModelSerializer,
+                                  OrderModelSerializer, BasketSerializer, SearchModelSerializer, CommentModelSerializer,
+                                  RatingModelSerializer,
+                                  ViewedProductSerializer)
+
+
+# Permission
+class IsAdminOrReadOnly(BasePermission):
+    def has_permission(self, request, view):
+        if request.method in ["GET", "HEAD", "OPTIONS"]:
+            return True
+        return request.user and request.user.is_staff
 
 
 #  Product
@@ -20,6 +29,7 @@ class ProductModelViewSet(ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductModelSerializer
     pagination_class = PageNumberPagination
+    permission_classes = [IsAdminOrReadOnly]
 
     # Popular product
     @action(detail=True, methods=['GET'])
@@ -90,6 +100,7 @@ class ProductDetailRetrieveAPIView(RetrieveAPIView):
     serializer_class = ProductModelSerializer
     filter_backends = (DjangoFilterBackend, OrderingFilter)
     filterset_fields = ['option__color', 'price']
+    permission_classes = [IsAdminOrReadOnly]
 
     # view
     def retrieve(self, request, *args, **kwargs):
@@ -101,42 +112,48 @@ class ProductDetailRetrieveAPIView(RetrieveAPIView):
         return Response(serializer.data)
 
 
-# Category
-class CategoryCreateAPIView(ListCreateAPIView):
-    queryset = Category.objects.all()
-    serializer_class = CategoryModelSerializer
-
-
-# WishList
-class WishListModelViewSet(ModelViewSet):
-    queryset = Wishlist.objects.all()
-    serializer_class = WishListModelSerializer
-
-
-# Order
-class OrderCreateView(CreateAPIView):
-    serializer_class = OrderModelSerializer
-    queryset = Order.objects.all()
-
-
-#  Basket
-class BasketViewSet(ModelViewSet):
-    queryset = Basket.objects.all()
-    serializer_class = BasketSerializer
-
-
 #  Search
 class ProductSearchAPIView(ListAPIView):
     queryset = Product.objects.all()
     serializer_class = SearchModelSerializer
     filter_backends = [SearchFilter]
     search_fields = ['title', 'description']
+    permission_classes = [AllowAny]
+
+
+# Category
+class CategoryCreateAPIView(ListCreateAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategoryModelSerializer
+    permission_classes = [IsAdminOrReadOnly]
+
+
+# WishList
+class WishListModelViewSet(ModelViewSet):
+    queryset = Wishlist.objects.all()
+    serializer_class = WishListModelSerializer
+    permission_classes = [AllowAny]
+
+
+# Order
+class OrderCreateView(CreateAPIView):
+    serializer_class = OrderModelSerializer
+    queryset = Order.objects.all()
+    permission_classes = [IsAuthenticated]
+
+
+#  Basket
+class BasketViewSet(ModelViewSet):
+    queryset = Basket.objects.all()
+    serializer_class = BasketSerializer
+    permission_classes = [AllowAny]
 
 
 # Comment
 class CommentViewSet(ModelViewSet):
     queryset = Comment.objects.all()
     serializer_class = CommentModelSerializer
+    permission_classes = [IsAuthenticated]
 
 
 # Rating
